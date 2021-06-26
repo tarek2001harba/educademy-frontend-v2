@@ -1,0 +1,44 @@
+.rating-card {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    background: var(--darkGrey);
+    color: var(--white);
+}
+
+.rating-card__title {
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.rating-card__avatar {
+    width: 3rem;
+    height: 3rem;
+    background: var(--mainGrey);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.rating-card__avatar img {
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+}
+
+.rating-card__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 1rem;
+}
+
+.rating-card__uname {
+    margin-bottom: .25rem;
+    font-weight: bold;
+}

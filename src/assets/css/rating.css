@@ -1,0 +1,16 @@
+.rating {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--white);
+    margin: .8ren 0;
+}
+
+.rating__rate-info {
+    margin-left: 6px;
+}
+
+.rating__rate-info span {
+    margin: 0 3px;
+}

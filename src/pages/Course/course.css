@@ -1,0 +1,147 @@
+.course {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    
+}
+
+.course__header {
+    height: 92.5vh;
+    width: 100%;
+    position: relative;
+    background: url(../../assets/img/pexels-anthony-shkraba-4348401.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 7.5%;
+    z-index: 1;
+    color: white;
+}
+
+.course__bg-overlay {
+    width: 100%;
+    height: 92.5vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: var(--black);
+    opacity: 0.6;
+    z-index: -1;
+}
+
+.course__teacher {
+    margin-bottom: 2rem;
+}
+
+.course__desc {
+    margin-bottom: 2rem;
+}
+
+.course__cta {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.course__details {
+    padding-top: 5vh;
+}
+
+.course__info {
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-family: var(--specialFontFam);
+    margin-bottom: 2rem;
+}
+
+.course__chapter {
+    min-height: 100vh;
+}
+
+.chapters__list {
+    list-style-position: inside;
+}
+
+.chapters__chapter {
+    width: 100%;
+    margin-bottom: 2rem;
+    position: relative;
+    font-size: 2rem;
+    list-style-image: linear-gradient(90deg, var(--accentColor), var(--accentColor));
+}
+
+.chapters__chapter::before {
+    content: '';
+    width: 100%;
+    height: calc(100% + 2rem);
+    position: absolute;
+    left: calc(.5rem - 1px);
+    top: calc(2rem - 1px);
+    border-left: 1px solid var(--white);
+    /* z-index: 0; */
+}
+
+.chapters__chapter:last-child:before {
+    display: none;
+}
+
+.chapters__chapter h5 {
+    display: inline-block;
+    margin-bottom: 1rem;
+    margin-left: .5rem;
+}
+
+.chapters__chapter p {
+    padding-left: 2rem;
+    font-size: var(--baseFont);
+}
+
+.course__ratings {
+    min-height: 100vh;
+}
+
+.course__ratings-container {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    row-gap: 1.5rem;
+    column-gap: 1.5rem;
+    /* background: var(--accentColor); */
+    /* padding: 2rem; */
+}
+
+.course__inv {
+    min-height: 25vh;
+    width: 100%;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.course__inv-title {
+    text-align: center;
+}
+
+.course__inv-title h3 {
+    margin-bottom: .5rem;
+}
+
+.course__inv-title p {
+    font-size: var(--baseFontPlus);
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}

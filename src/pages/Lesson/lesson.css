@@ -1,0 +1,57 @@
+.lesson {
+    height: 90vh;
+    max-height: 100vh;
+    width: 100%;
+
+    display: grid;
+    grid-template-areas: "video materials"
+        "nav nav";
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 80vh 10vh;
+    color: white;
+    background: var(--black);
+}
+
+/* .lesson__video, */
+.lesson__materials {
+    padding: 2rem;
+}
+
+.lesson__video {
+    grid-area: video;
+    background: var(--medGrey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--red);
+}
+
+.lesson__materials {
+    grid-area: materials;
+    overflow-y: scroll;
+}
+
+.lesson__readings p,
+.lesson__resources .resources {
+    margin-top: 1rem;
+}
+
+.lesson__resources {
+    margin-top: 2rem;
+}
+
+.lesson__nav {
+    grid-area: nav;
+    background-color: var(--darkGrey);
+    padding: 0 2rem;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.lesson__nav Span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

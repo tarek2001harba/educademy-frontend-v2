@@ -1,0 +1,23 @@
+.classroom {
+    
+    min-height: 50vh;
+}
+
+.classroom__courses-cont {
+    margin-top: 2rem;
+    min-height: 50vh;
+}
+
+.classroom__courses {
+    min-height: 50vh;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-auto-rows: 50vh;
+    row-gap: 2rem;
+}
+
+.classroom__uinfo{
+    width: 100%;
+    height: 30vh;
+    background-color: var(--darkGrey);
+}

@@ -1,0 +1,104 @@
+.plan {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1.5rem;
+    position: relative;
+    z-index: 1;
+    user-select: none;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    overflow: hidden;
+}
+
+/* .plan::after {
+    content: "";
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+    background: var(--accentColor);
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    clip-path: circle(0% at 50% 50%);
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    z-index: -2;
+    opacity: 0.8;
+} */
+
+/* .plan::before {
+    content: '';
+    width: 75%;
+    height: 75%;
+    background: var(--accentColor);
+    position: absolute;
+    left: 12.5%;
+    top: 12.5%;
+    clip-path: circle(0% at 50% 50%);
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition-delay: .1s;
+    z-index: -1;
+    opacity: 0.8;
+} */
+
+/* .plan:hover::after {
+    clip-path: circle(50% at 50% 50%);
+}
+
+.plan:hover>.plan__cta>button {
+    border-color: var(--white);
+} */
+
+/* .plan:hover::before {
+    clip-path: circle(50% at 50% 50%);
+} */
+/* .plan:hover .title-color {
+    background: var(--white);
+    background-clip: text;
+    -moz-background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+} */
+/* 
+.plan:hover {
+    color: var(--white);
+}
+ */
+
+.plan__title {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.plan__title h3 {
+    margin: .8rem 0;
+}
+
+.plan__features ul {
+    list-style-position: inside;
+    list-style-type: circle;
+}
+
+.plan__features ul::marker {
+    list-style-position: inside;
+    list-style-type: circle;
+}
+
+.plan__cta {
+    width: 100%;
+    margin: 1rem 0;
+}

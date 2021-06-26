@@ -1,0 +1,24 @@
+.info-col {
+    height: 100%;
+    flex: 1;
+    border-left: 2px solid var(--mainGrey);
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--mainGrey);
+}
+
+.info-col h5 {
+    margin: 4px 0px;
+}
+
+.info-col__title h5,
+.info-col__ext h5 {
+    font-weight: normal;
+}
+
+.info-col__info h5 {
+    font-weight: bolder;
+    color: var(--white);
+}

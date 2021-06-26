@@ -1,0 +1,154 @@
+.btn--small {
+    min-width: 150px;
+}
+
+.btn--medium {
+    min-width: 200px;
+}
+
+.btn--big {
+    min-width: 250px;
+}
+
+.btn--filled {
+    background: var(--accentColor);
+    color: var(--white);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.btn--filled::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: var(--white);
+    transform: translateY(100%);
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    pointer-events: none;
+    z-index: -1;
+    transition: all .2s ease-in-out;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+}
+
+.btn--filled:hover::before {
+    transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+}
+
+.btn--filled:hover {
+    color: var(--accentColor);
+    position: relative;
+}
+
+.btn--outlined--white {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.btn--outlined--white::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: var(--white);
+    transform: translateY(100%);
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    pointer-events: none;
+    z-index: -1;
+    transition: all .2s ease-in-out;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+}
+
+.btn--outlined--white:hover::before {
+    transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+}
+
+
+.btn--outlined--white:hover {
+    color: var(--black);
+}
+
+.btn--outlined--black {
+    background: transparent;
+    color: var(--black);
+    border: 2px solid var(--black);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.btn--outlined--black::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: var(--white);
+    transform: translateY(100%);
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    pointer-events: none;
+    z-index: -1;
+    transition: all .2s ease-in-out;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+}
+
+.btn--outlined--black:hover::before {
+    transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+}
+
+.btn--outlined--black:hover {
+    color: var(--white);
+}
+
+.btn--secondary {
+    margin-left: 18px;
+}
+
+/* smooth transition class */
+.sm-trans {
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+}

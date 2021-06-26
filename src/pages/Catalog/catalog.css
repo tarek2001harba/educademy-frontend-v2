@@ -1,0 +1,31 @@
+.catalog {
+    
+}
+
+.catalog__trending {
+    padding-top: 48px;
+}
+
+.trending__content {
+    display: flex;
+    align-items: center;
+    padding-top: 2.5%;
+}
+
+.catalog__courses {
+    min-height: 100vh;
+}
+
+.courses__title {
+    text-align: center;
+    margin: 7.5% 0 5% 0;
+}
+
+.courses__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 36px;
+    column-gap: 18px;
+    margin: 48px 0;
+}

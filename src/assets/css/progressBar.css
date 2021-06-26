@@ -1,0 +1,58 @@
+.pbar {
+    max-width: 95%;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pbar progress {
+    flex: 1;
+    background-color: var(--green);
+    border: none;
+    height: 1rem;
+    border-radius: var(--borderRadius);
+    -webkit-border-radius: var(--borderRadius);
+    -moz-border-radius: var(--borderRadius);
+    -ms-border-radius: var(--borderRadius);
+    -o-border-radius: var(--borderRadius);
+}
+
+.pbar progress::-webkit-progress-bar {
+    flex: 1;
+    background-color: var(--mainGrey);
+    border: none;
+    height: 1.5rem;
+    border-radius: var(--borderRadius);
+    -webkit-border-radius: var(--borderRadius);
+    -moz-border-radius: var(--borderRadius);
+    -ms-border-radius: var(--borderRadius);
+    -o-border-radius: var(--borderRadius);
+
+}
+
+.pbar progress::-webkit-progress-value {
+    background-color: var(--green);
+    border-radius: var(--borderRadius);
+    -webkit-border-radius: var(--borderRadius);
+    -moz-border-radius: var(--borderRadius);
+    -ms-border-radius: var(--borderRadius);
+    -o-border-radius: var(--borderRadius);
+}
+
+.pbar progress::-moz-progress-bar {
+    flex: 1;
+    background-color: var(--green);
+    border: none;
+    height: 1.5rem;
+    border-radius: var(--borderRadius);
+    -webkit-border-radius: var(--borderRadius);
+    -moz-border-radius: var(--borderRadius);
+    -ms-border-radius: var(--borderRadius);
+    -o-border-radius: var(--borderRadius);
+}
+
+.pbar span {
+    margin-left: .5rem;
+    margin-top: .5rem;
+}

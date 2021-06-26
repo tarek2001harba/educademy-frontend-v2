@@ -1,0 +1,48 @@
+.scb {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin: 0px 2.5%;
+}
+
+.scb form {
+    width: 100%;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.scb__sc-box {
+    width: 85%;
+    max-width: 500px;
+    height: 36px;
+    border: none;
+    background-color: var(--darkGrey);
+    color: var(--white);
+}
+
+.scb__sc-btn {
+    width: 15%;
+    max-width: 200px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accentColor);
+    color: var(--white);
+    border-left: 1px solid var(--accentColor);
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+}
+
+.scb__sc-btn:hover {
+    background: #2c31d3;
+}
+
+.navbar__link {
+    color: var(--white);
+    text-decoration: none;
+}

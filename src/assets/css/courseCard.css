@@ -1,0 +1,77 @@
+.course-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    color: var(--white);
+    padding: 1.5rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.course-card__overlay {
+    width: 100%;
+    height: 100%;
+    background: var(--black);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    opacity: .75;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    /*clip-path: polygon(25% 0, 100% 0%, 100% 100%);
+    */
+}
+
+.course-card__image {
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -2;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    /* clip-path: polygon(25% 0, 100% 0%, 100% 100%); */
+}
+
+.course-card:hover .course-card__overlay {
+    opacity: 0.9;
+}
+
+.course-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.course-card__title {
+    margin-bottom: .5rem;
+}
+
+.course-card__creator {
+    margin-bottom: 1.5rem;
+}
+
+.course-card__students-info {
+    display: flex;
+    align-items: center;
+}
+
+.course-card__students-info span {
+    margin: 0 6px;
+}
+
+.course-card__cta {
+    display: flex;
+    align-items: center;
+    margin-top: 1.5rem;
+}

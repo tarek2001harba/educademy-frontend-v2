@@ -1,38 +1,214 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./assets/fonts/Montserrat-Black.ttf');
+}
+@font-face {
+    font-family: 'Work Sans';
+    src: url('./assets//fonts/WorkSans-Light.ttf');
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'Work Sans';
+    src: url('./assets/fonts/WorkSans-Bold.ttf');
+    font-weight: bold;
+}
+:root {
+    /* https://coolors.co/c1292e-6457a6-060d0d-f6f2ff */
+    /* https://coolors.co/23ce6b-6320ee-060d0d-f6f2ff */
+    /* https://coolors.co/ef233c-43aa8b-6320ee-000000-f6f2ff */
+    /* https://coolors.co/23ce6b-ff312e-454ade-000000-f6f2ff */
+    --accentColor: #454ADE;
+    --secondaryColor: #EF476F;
+    --black: #000;
+    --green: #23CE6B;
+    --red: #FF312E;
+    --white: #F6F2FF;
+    --mainGrey: #d8d4d4;
+    --lightGrey: #999999;
+    --medGrey: #4d4d4d50;
+    /* #999999 */
+    --darkGrey: #31313150;
+    /* --digGradient: linear-gradient(to bottom right, var(--accentColor), var(--darkBlue));
+    --horGradient: linear-gradient(to right, var(--accentColor), var(--darkBlue)); */
+    --shadowColor: #1c1c1c50;
+    --borderRadius: .4rem;
+    --baseFont: 16px;
+    --baseFontPlus: 1.25rem;
+    --subFont: 1.999rem;
+    --subHeading: 2.25rem;
+    --smallHeading: 2.827rem;
+    --mediumHeading: 3.998rem;
+    --largeHeading: 5.653rem;
+    --cardMargin: 18px;
+    --defaultFontFam: 'Work Sans', sans-serif;
+    --specialFontFam: 'Montserrat', sans-serif;
+    font-size: var(--baseFontSize);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: var(--defaultFontFam);
+}
+
+
 .App {
-  text-align: center;
+    color: var(--white);
+    background: var(--black);
+    padding-top: 10vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.align {
+    width: 85%;
+    margin: 0 auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+ul {
+    list-style-position: inside;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+ul li {
+    margin-bottom: 1rem;
 }
 
-.App-link {
-  color: #61dafb;
+a {
+    color: var(--white);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+a:hover {
+    opacity: 0.6;
+}
+
+input,
+textarea,
+select {
+    background: var(--mainGrey);
+    border: none;
+    padding: 6px 12px;
+    border-radius: var(--borderRadius);
+    -webkit-border-radius: var(--borderRadius);
+    -moz-border-radius: var(--borderRadius);
+    -ms-border-radius: var(--borderRadius);
+    -o-border-radius: var(--borderRadius);
+}
+
+button {
+    height: 50px;
+    border: none;
+    display: block;
+    font-size: var(--baseFont);
+    font-weight: bold;
+    border-radius: var(--borderRadius);
+    -webkit-border-radius: var(--borderRadius);
+    -moz-border-radius: var(--borderRadius);
+    -ms-border-radius: var(--borderRadius);
+    -o-border-radius: var(--borderRadius);
+    cursor: pointer;
+}
+
+.border--left {
+    border-radius: var(--borderRadius) 0px 0px var(--borderRadius);
+    -webkit-border-radius: var(--borderRadius) 0px 0px var(--borderRadius);
+    -moz-border-radius: var(--borderRadius) 0px 0px var(--borderRadius);
+    -ms-border-radius: var(--borderRadius) 0px 0px var(--borderRadius);
+    -o-border-radius: var(--borderRadius) 0px 0px var(--borderRadius);
+}
+
+.border--right {
+    border-radius: 0px var(--borderRadius) var(--borderRadius) 0px;
+    -webkit-border-radius: 0px var(--borderRadius) var(--borderRadius) 0px;
+    -moz-border-radius: 0px var(--borderRadius) var(--borderRadius) 0px;
+    -ms-border-radius: 0px var(--borderRadius) var(--borderRadius) 0px;
+    -o-border-radius: 0px var(--borderRadius) var(--borderRadius) 0px;
+}
+
+h1 {
+    font-size: var(--largeHeading);
+}
+
+h2 {
+    font-size: var(--mediumHeading);
+}
+
+h3 {
+    font-size: var(--smallHeading);
+}
+
+h4 {
+    font-size: var(--subHeading);
+}
+
+h5 {
+    font-size: var(--baseFontPlus);
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Montserrat", sans-serif;
+}
+
+p {
+    line-height: 1.5rem;
+    color: var(--mainGrey);
+    /* font-size: var(--baseFontPlus); */
+}
+
+.special-heading {
+    font-family: var(--specialFontFam);
+    line-height: 115%;
+}
+
+.title-color {
+    color: var(--white);
+    /* font-family: var(--specialFontFam); */
+    position: relative;
+}
+
+.title--grey {
+    color: var(--darkGrey);
+}
+
+.title--black {
+    color: var(--black);
+}
+
+.text--white {
+    color: var(--white);
+}
+
+.span--normal {
+    font-weight: normal;
+}
+
+.span--bold {
+    font-weight: bold;
+}
+
+/* ::-webkit-scrollbar {
+    width: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--darkGrey);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--mainGrey);
+} */
+
+::-moz-selection {
+    /* Code for Firefox */
+    color: var(--white);
+    background: var(--accentColor);
+}
+
+::selection {
+    color: var(--white);
+    background: var(--accentColor);
 }

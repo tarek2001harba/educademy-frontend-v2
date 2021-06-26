@@ -1,0 +1,12 @@
+.type {
+    color: var(--lightGrey);
+    display: flex;
+    align-items: center;
+}
+
+.type__name {
+    margin-left: .5rem;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
