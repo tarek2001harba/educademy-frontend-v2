@@ -42,7 +42,7 @@ const Registeration = () => {
             password : password.value
         }
         axios.post('/user/create.php', userSign).then(res => {
-            console.log(res.data)
+            console.log(res)
             userSign.uid = parseInt(res.data.uid)
             userSign.tid = parseInt(res.data.tid)
             userSign.signed = true
@@ -50,7 +50,7 @@ const Registeration = () => {
             // setSignStatus(true)
         }).catch( err => {
             
-            console.log(err.data)
+            console.log(err)
             // setSignStatus(false)
         })
     }
