@@ -21,6 +21,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 // contexts
 import UserContext from './contexts/UserContext'
+
 // styles imports
 import './App.css'
 

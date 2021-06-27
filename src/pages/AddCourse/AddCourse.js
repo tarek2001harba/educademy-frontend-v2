@@ -1,4 +1,4 @@
-import {React, useState, useContext} from 'react'
+import {React, useState, useEffect, useContext} from 'react'
 //components
 import Field from '../../components/Field'
 import Button from '../../components/Button'
@@ -8,10 +8,13 @@ import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 //contexts
 import UserContext from '../../contexts/UserContext'
+// backend
+import axios from 'axios'
 //css
 import './addcourse.css'
 
 const AddCourse = () => {
+    axios.defaults.baseURL = 'https://localhost/educademy/api'
     const {user, setUser} = useContext(UserContext)
     console.log(user)
     const [courseInfo, setCourseInfo] = useState({
@@ -24,6 +27,12 @@ const AddCourse = () => {
     });
     const [chapters, setChapters] = useState([]);
     const [lessons, setLessons] = useState([]);
+    const [ctgs, setCtgs] = useState([]);
+    // fetching categories
+    useEffect(() => {axios.get('/category/get.php').then(res =>{
+        console.log(res.data)
+        setCtgs(res.data)
+    }).catch(err => console.log(err))}, []);
     const addChapter = () =>{
         const chapterTitle = document.querySelector("#chapter-title")
         const chapterDesc = document.querySelector("#chapter-desc")
@@ -68,6 +77,7 @@ const AddCourse = () => {
             }
         )
     }
+
     return (
         <div className="add-course align">
             <div className="add-course__title">
@@ -77,12 +87,12 @@ const AddCourse = () => {
               <p>Step 1: General Information</p>
             </div>
             <form className="add-course__form" action="">
-                <Field id="course-title" fieldName="Title:"/>
-                <Field id="course-desc" fieldName="Description:"/>
-                <Field id="course-lang" fieldName="Language:" fieldType="select" options={["English", "German", "Arabic"]}/>
-                <Field id="course-lvl" fieldName="Level:" fieldType="select" options={["Beginner", "Intermediate", "Advanced"]}/>
-                <Field id="course-ctg" fieldName="Category:" fieldType="select" options={["Technology", "Arts", "Sciences"]}/>
-                <Field id="course-period" fieldName="Esimated period in months:" />
+                <Field id="course-title" fieldName="Title"/>
+                <Field id="course-desc" fieldName="Description"/>
+                <Field id="course-lang" fieldName="Language" fieldType="select" options={["English", "German", "Arabic"]}/>
+                <Field id="course-lvl" fieldName="Level" fieldType="select" options={["Beginner", "Intermediate", "Advanced"]}/>
+                <Field id="course-ctg" fieldName="Category" fieldType="select" options={ctgs.map(ctg => ctg[1])}/>
+                <Field id="course-period" fieldName="Esimated period in months" />
             </form>
             <div className="add-course__step">
               <p>Step 2: Chapters</p>

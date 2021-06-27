@@ -1,7 +1,7 @@
 import React from 'react'
 import '../assets/css/infofield.css'
 
-const InfoRow = (fieldName, info) => {
+const InfoField = ({fieldName, info}) => {
     return (
         <div className="info-field">
             <span className="info-field__name">{fieldName}:</span>
@@ -10,4 +10,4 @@ const InfoRow = (fieldName, info) => {
     )
 }
 
-export default InfoRow
+export default InfoField

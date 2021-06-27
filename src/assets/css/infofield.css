@@ -1,10 +1,15 @@
+.info-field{
+    font-size: var(--baseFontPlus);
+    margin: .5rem 0rem;
+}
+
 .info-field__name{
     padding: 1rem 0;
     font-weight: bold;
-    margin-right: 2rem;
+    margin-right: .5rem;
 }
 
 .info-field__info{
     width: 100%;
-    padding: 1rem;
+    padding: 1rem .5rem;
 }

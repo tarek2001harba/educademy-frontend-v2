@@ -9,12 +9,12 @@ import Field from '../../components/Field'
 import UserContext from '../../contexts/UserContext'
 // backend
 import axios from 'axios'
-
 //css
 import './reg.css'
 const Registeration = () => {
     axios.defaults.baseURL = 'https://localhost/educademy/api'
-    const [signStatus, setSignStatus] = useState(false);
+    const [signUpStatus, setSignUpStatus] = useState(false);
+    const [signInStatus, setSignInStatus] = useState(false);
     const {user, setUser} = useContext(UserContext)
     const signup = async () => {
         const fname = document.querySelector('#signup-fname');
@@ -45,13 +45,14 @@ const Registeration = () => {
             console.log(res)
             userSign.uid = parseInt(res.data.uid)
             userSign.tid = parseInt(res.data.tid)
+            userSign["join_date"] = res.data["join_date"]
             userSign.signed = true
             setUser(userSign)
-            // setSignStatus(true)
+            setSignUpStatus(true)
         }).catch( err => {
             
             console.log(err)
-            // setSignStatus(false)
+            setSignUpStatus(false)
         })
     }
     const signin = () => {
@@ -62,37 +63,44 @@ const Registeration = () => {
             password: pwd.value
         }
         axios.post('/user/signin.php', userIn).then(res => {
-            console.log(res)
             userIn.uid = parseInt(res.data.uid)
             userIn.tid = parseInt(res.data.tid)
-            userIn.fname = parseInt(res.data.fname)
-            userIn.lname = parseInt(res.data.lname)
-            userIn.gender = parseInt(res.data.gender)
-            userIn.bdate = parseInt(res.data.bdate)
-            userIn.country = parseInt(res.data.country)
-            userIn.about = parseInt(res.data.about)
-            userIn.spec = parseInt(res.data.spec)
-            userIn.type = parseInt(res.data.type)
-            userIn.phone = parseInt(res.data.phone)
-            userIn.email = parseInt(res.data.email)
+            userIn.fname = res.data.fname
+            userIn.lname = res.data.lname
+            userIn.gender = res.data.gender
+            userIn.bdate = res.data.bdate
+            userIn.country = res.data.country
+            userIn.about = res.data.about
+            userIn.spec = res.data.spec
+            userIn.type = res.data.type
+            userIn.phone = res.data.phone
+            userIn.email = res.data.email
+            userIn["join_date"] = res.data["join_date"]
             userIn.signed = true
             console.log(userIn)
             setUser(userIn)
-            // setSignStatus(true)
+            setSignInStatus(true)
         }).catch(err => {
-            setSignStatus(false)
+            setSignInStatus(false)
         })
     }
     return (
         <div className="reg">
-            {signStatus ? (
+            {signUpStatus ? (
             <Route path="/">
                 <Redirect to="/registeration/sign-up/success" exact/>
                 <div className="reg__success" action="">
                     <h4>Welcome to Educademy. Your journey of learning starts today!</h4>
                     <h5>Choose a <Link to="/plans">plan</Link> to get up and running.</h5>
                 </div>
-            </Route>) : 
+            </Route>) : signInStatus ? (
+            <Route path="/">
+                <Redirect to="/registeration/sign-up/success" exact/>
+                <div className="reg__success" action="">
+                    <h4>Welcome Back!</h4>
+                    <h5>Go to your <Link to="/">classroom</Link> and continue your journey of learning and improvement. </h5>
+                </div>
+            </Route>) :
             <div className="reg__pagination-container">
                 <Pagination sections={["Sign In", "Sign Up"]}/>
             </div>}

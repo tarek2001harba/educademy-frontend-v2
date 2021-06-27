@@ -1,5 +1,4 @@
 .classroom {
-    
     min-height: 50vh;
 }
 
@@ -17,7 +16,58 @@
 }
 
 .classroom__uinfo{
+    margin-top: 2rem;
     width: 100%;
-    height: 30vh;
+    min-height: 50vh;
+    padding: 2rem;
+    margin-bottom: 2rem;
     background-color: var(--darkGrey);
+    display: flex;
+    flex-direction: column;
+}
+
+.uinfo__pic{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.uinfo__pic img{
+    width: 20%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.uinfo__user{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    padding: 0rem 3rem;
+}
+
+.uinfo__info{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 30%);
+    column-gap: 3.33%;
+    align-content: center;
+}
+
+.uinfo__action{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.classroom__add-course{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
