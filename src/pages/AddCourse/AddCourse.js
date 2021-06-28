@@ -16,6 +16,7 @@ import './addcourse.css'
 const AddCourse = () => {
     axios.defaults.baseURL = 'https://localhost/educademy/api'
     const {user, setUser} = useContext(UserContext)
+    const {submitted, setSubmitted} = useState(false);
     console.log(user)
     const [courseInfo, setCourseInfo] = useState({
         "title" : "",
@@ -28,10 +29,14 @@ const AddCourse = () => {
     const [chapters, setChapters] = useState([]);
     const [lessons, setLessons] = useState([]);
     const [ctgs, setCtgs] = useState([]);
+    const [levels, setLevels] = useState([]);
     // fetching categories
     useEffect(() => {axios.get('/category/get.php').then(res =>{
-        console.log(res.data)
         setCtgs(res.data)
+    }).catch(err => console.log(err))}, []);
+    // fetching levels
+    useEffect(() => {axios.get('/level/get.php').then(res =>{
+        setLevels(res.data)
     }).catch(err => console.log(err))}, []);
     const addChapter = () =>{
         const chapterTitle = document.querySelector("#chapter-title")
@@ -48,6 +53,7 @@ const AddCourse = () => {
         const lessonTitle = document.querySelector("#lesson-title")
         const lessonVideo = document.querySelector("#lesson-video")
         const lessonContent = document.querySelector("#lesson-content")
+        const lesssonResource = document.querySelector("#lesson-resource")
         const chapterSelect =document.querySelector("#lesson-chapter")
         // console.log(document.querySelector("#lesson-title").value)
         // console.log(document.querySelector("#lesson-video").value)
@@ -55,27 +61,36 @@ const AddCourse = () => {
         // console.log(document.querySelector("#lesson-content").value)
         setLessons(prevLessons => [...prevLessons, {
             "title" : lessonTitle.value,
-            "videoLink" : lessonVideo.value,
+            "video" : lessonVideo.value,
             "chapter" : chapterSelect.options[chapterSelect.selectedIndex].text,
-            "content" : lessonContent.value
+            "content" : lessonContent.value,
+            "resource" : lesssonResource.value
             }]
         )
     }
-    const submit = () =>{
-        console.log("clicked")
-        const langSelect = document.querySelector("#course-lang");
-        const lvlSelect = document.querySelector("#course-lvl");
-        const ctgSelect = document.querySelector("#course-ctg");
-        setCourseInfo(
-            {
+    const submit = async () =>{
+        const langSelect = document.querySelector("#course-lang")
+        const lvlSelect = document.querySelector("#course-lvl")
+        const ctgSelect = document.querySelector("#course-ctg")
+        const lvl = lvlSelect.options[lvlSelect.selectedIndex].value
+        const ctg = ctgSelect.options[ctgSelect.selectedIndex].value
+        await setCourseInfo({
+                "teacher" : user.tid,
                 "title" : document.querySelector("#course-title").value,
                 "description" : document.querySelector("#course-title").value,
-                "language" : langSelect.options(langSelect.selectedIndex).text,
-                "level" : lvlSelect.options(lvlSelect.selectedIndex).text,
-                "category" : ctgSelect.options(ctgSelect.selectedIndex).text,
-                "period" : document.querySelector("#course-period").value
+                "language" : langSelect.options[langSelect.selectedIndex].text,
+                "level" : lvl,
+                "category" : ctg,
+                "period" : document.querySelector("#course-period").value,
+                "thumb" : document.querySelector("#course-thumb").value,
+                "chapters" : chapters,
+                "lessons" : lessons
             }
         )
+        console.log(courseInfo)
+        axios.post('/course/create.php', courseInfo).then(res => {
+            console.log(res.data)
+        }).catch(err => console.log(err))
     }
 
     return (
@@ -89,10 +104,11 @@ const AddCourse = () => {
             <form className="add-course__form" action="">
                 <Field id="course-title" fieldName="Title"/>
                 <Field id="course-desc" fieldName="Description"/>
-                <Field id="course-lang" fieldName="Language" fieldType="select" options={["English", "German", "Arabic"]}/>
-                <Field id="course-lvl" fieldName="Level" fieldType="select" options={["Beginner", "Intermediate", "Advanced"]}/>
-                <Field id="course-ctg" fieldName="Category" fieldType="select" options={ctgs.map(ctg => ctg[1])}/>
+                <Field id="course-lang" fieldName="Language" fieldType="select" options={["English", "German", "Russian", "Arabic", "French"]}/>
+                <Field id="course-lvl" fieldName="Level" fieldType="select" options={levels.map(lvl => lvl)}/>
+                <Field id="course-ctg" fieldName="Category" fieldType="select" options={ctgs.map(ctg => ctg)}/>
                 <Field id="course-period" fieldName="Esimated period in months" />
+                <Field id="course-thumb" fieldName="Thumbnail" />
             </form>
             <div className="add-course__step">
               <p>Step 2: Chapters</p>
@@ -124,9 +140,10 @@ const AddCourse = () => {
             </div>
             <form className="add-course__form subpart-form" action="">
                 <Field id="lesson-title" fieldName="Title"/>
-                <Field id="lesson-video" fieldName="Video Link (must be uploaded to Youtube)"/>
+                <Field id="lesson-video" fieldName="Embed Video Link (must be uploaded to Youtube)"/>
                 <Field id="lesson-chapter" fieldName="Chapter" fieldType="select" options={chapters.map(ch => ch.title)}/>
                 <Field id="lesson-content" fieldName="Readings/Written Content" fieldType="textarea"/>
+                <Field id="lesson-resource" fieldName="Resources (Resource/Site Name : Link, Resource/Site 2 Name : Link 2, ...)" fieldType="textarea"/>
                 <div className="add-course__action">
                     <div className="add-course__action-icon">
                         <AddIcon fontSize="inherit" onClick={addLesson}/>
@@ -149,10 +166,10 @@ const AddCourse = () => {
                 </div>
             </form>
             <div className="add-course__action">
-                    <div className="add-course__submit">
-                        <Button type="filled" text="Submit for Review" size="big" onClick={submit}/>
-                    </div>
+                <div className="add-course__submit">
+                    <Button type="filled" text="Submit for Review" size="big" onClick={submit}/>
                 </div>
+            </div>
         </div>
     )
 }
