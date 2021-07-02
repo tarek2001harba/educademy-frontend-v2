@@ -1,19 +1,30 @@
-import {React, useContext} from 'react'
+import {React, useContext, useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 // components
 import Card from '../../components/Card'
 import ClassCourse from '../../components/ClassCourse'
 import InfoField from '../../components/InfoField'
 import Button from '../../components/Button'
+import axios from 'axios'
 // contexts
 import UserContext from '../../contexts/UserContext'
 // img
 import userImg from '../../assets/img/tarek.jpg'
 import './classroom.css'
+import Message from '../../components/Message'
 const Classroom = () => {
     const {user, setUser} = useContext(UserContext)
+    const [ classCourses, setClassCourses ] = useState([])
     const uname = user.fname + " " + user.lname
-    
+    axios.defaults.baseURL = 'https://localhost/educademy/api'
+    useEffect(() => {
+        if(user.type === 'Student'){
+            axios.post('/registeration/getClassroom.php', {sid : user.sid}).then( res => {
+                console.log(res)
+                setClassCourses(res.data)
+            })
+        }
+    }, [])
     const signOut = () => {
         setUser({signed:false})
     }
@@ -56,33 +67,20 @@ const Classroom = () => {
                     {user.type === "Teacher" ? addCourseAction : null}
                 </div>
                 <div className="classroom__courses">
-                    <Card width="100%" height="100%">
-                        <ClassCourse enrolled={true}
-                            image="https://cdn.pixabay.com/photo/2014/05/03/00/46/notebook-336634_960_720.jpg"
-                            title="Learn Graphic Design With an Award-Winning Designer"
-                            creator="Sklolo Harba"
-                            chapter="Logo Design Principles"
-                            lesson="Negative Space"
-                        />
-                    </Card>
-                    <Card width="100%" height="100%">
-                        <ClassCourse enrolled={true}
-                            image="https://cdn.pixabay.com/photo/2014/05/03/00/46/notebook-336634_960_720.jpg"
-                            title="Learn Graphic Design With an Award-Winning Designer"
-                            creator="Sklolo Harba"
-                            chapter="Logo Design Principles"
-                            lesson="Negative Space"
-                        />
-                    </Card>
-                    <Card width="100%" height="100%">
-                        <ClassCourse enrolled={true}
-                            image="https://cdn.pixabay.com/photo/2014/05/03/00/46/notebook-336634_960_720.jpg"
-                            title="Learn Graphic Design With an Award-Winning Designer"
-                            creator="Sklolo Harba"
-                            chapter="Logo Design Principles"
-                            lesson="Negative Space"
-                        />
-                    </Card>
+                    {classCourses.length === 0 ? 
+                    <Message type="error" message="You are not enrolled in any courses" />
+                    : classCourses.map(course => (
+                        <Card width="100%" height="100%">
+                            <ClassCourse enrolled={true}
+                                cid={course.cid}
+                                image={course.thumb}
+                                title={course.title}
+                                creator={course.teacher}
+                                chapter="Logo Design Principles"
+                                lesson="Negative Space"
+                            />
+                        </Card>
+                    ))}
                 </div>
             </div>
         </div>

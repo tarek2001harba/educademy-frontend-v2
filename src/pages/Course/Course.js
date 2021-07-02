@@ -107,7 +107,10 @@ const Course = () => {
                 </div>
                 <div className="course__chapters">
                     <div className="section-title">
-                        <h3 className="title-color">What You'll Learn</h3>
+                        {registered ? 
+                            <h3 className="title-color">Chapters</h3> :
+                            <h3 className="title-color">What You'll Learn</h3> 
+                        }
                     </div>
                     <div>
                         <ul className="chapters__list">
@@ -115,6 +118,13 @@ const Course = () => {
                                 <li className="chapters__chapter">
                                     <h5>{chapter.title}</h5>
                                     <p>{chapter.description}</p>
+                                    {chapter.lessons.length > 0 ?
+                                    chapter.lessons.map(ls => (
+                                        <li className="chapters__chapter">
+                                            <h5>{ls.title}</h5>
+                                            <p>{ls.description}</p>
+                                        </li> 
+                                    )) : null}
                                 </li>
                             ))}
                         </ul>

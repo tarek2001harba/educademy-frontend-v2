@@ -88,7 +88,7 @@ const AddCourse = () => {
         })
         console.log(courseInfo)
         axios.post('/course/create.php', courseInfo).then(res => {
-            console.log(res.data)
+            console.log(res)
         }).catch(err => console.log(err))
     }
 
@@ -121,8 +121,8 @@ const AddCourse = () => {
                     </div>
                 </div>
                 <div className="add-course__added-info">
-                    {chapters.map(ch => (
-                        <div key={ch} className="added-info__container">
+                    {chapters.map((ch, ind) => (
+                        <div key={ch+"-"+ind} className="added-info__container">
                             <InfoItem fieldName="Title" info={ch.title}/>
                             <InfoItem fieldName="Description" info={ch.description}/>
                             <div className="added-info__action-container">
@@ -149,8 +149,8 @@ const AddCourse = () => {
                     </div>
                 </div>
                 <div className="add-course__added-info">
-                    {lessons.map(ls => (
-                        <div key={ls} className="added-info__container">
+                    {lessons.map((ls, ind) => (
+                        <div key={ls+ind} className="added-info__container">
                             <InfoItem fieldName="Title" info={ls.title}/>
                             <InfoItem fieldName="Video Link" info={ls.videoLink}/>
                             <InfoItem fieldName="Chapter" info={ls.chapter}/>
@@ -166,7 +166,7 @@ const AddCourse = () => {
             </form>
             <div className="add-course__action">
                 <div className="add-course__submit">
-                    <Button type="filled" text="Submit for Review" size="big" onClick={submit}/>
+                    <Button type="filled" text="Submit for Review" size="big" handleClick={submit}/>
                 </div>
             </div>
         </div>
