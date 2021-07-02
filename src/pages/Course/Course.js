@@ -1,41 +1,109 @@
-import React from 'react'
+import React, {useEffect, useState,  useContext} from 'react'
+import { Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Button from '../../components/Button'
 import InfoCol from '../../components/InfoCol'
 import RatingCard from '../../components/RatingCard'
-import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled'
+import UserContext from '../../contexts/UserContext'
+import Loading from '../../components/Loading'
+// import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled'
+import axios from 'axios'
 import './course.css'
-const Course = (thumsb) => {
-    return (
+import Message from '../../components/Message'
+const Course = () => {
+    const { id } = useParams();
+    const { user } = useContext(UserContext) 
+    const [courseLoading, setCourseLoading] = useState(true)
+    const [courseInfo, setCourseInfo] = useState({chapters : []})
+    const [registered, setRegistered] = useState(false)
+    const [subscribed, setSubscribed] = useState(false)
+    const [allowUnenroll, setAllowUnenroll] = useState(false)
+    axios.defaults.baseURL = 'https://localhost/educademy/api'
+    useEffect(() => {
+        axios.post('/course/getCourse.php', {'id' : id}).then(res => {
+            console.log(res)
+            setCourseInfo(() => res.data)
+        }).catch(err => console.log(err))
+        axios.post('/registeration/check.php', {'cid' : id, 'sid' : user.sid}).then(res => {
+            console.log(res)
+            setRegistered(res.data.registered)
+            setAllowUnenroll(res.data.allowUnenroll)
+        }).catch(err => console.log(err))
+        axios.post('/purchase/check.php', {sid : user.sid}).then(res => {
+            console.log(res)
+            setSubscribed(res.data.subscribed)
+        }).catch(err => console.log(err))
+        setCourseLoading(false)
+    }, [registered])
+
+    const enroll = () => {
+        axios.post('/registeration/enroll.php', {
+            cid : courseInfo.cid,
+            sid : user.sid
+        }).then(res => {
+            console.log(res)
+            if(res.status === 200){
+                setRegistered(true);
+            }
+        }).catch(err => console.log(err))
+    }
+
+    const unenroll = () => {
+        axios.post('/registeration/unenroll.php', {
+            cid : courseInfo.cid,
+            sid : user.sid
+        }).then(res => {
+            console.log(res)
+            if(res.status === 200){
+                setRegistered(false);
+                setRegistered(false);
+            }
+        }).catch(err => console.log(err))
+    }
+    const cta = (
+        <div className="course__cta">
+            {user.signed ? 
+                (subscribed ?
+                    (registered === false ? 
+                        <Button width="250px" 
+                        text={ user.type === "Teacher" ? "Teachers Can Not Enroll" : "Enroll Now"} handleClick={enroll} dis={user.type === "Teacher" ? true : false}/> :
+                        (allowUnenroll ? 
+                            <Button width="250px" type="cancel" text="Leave Course" handleClick={unenroll} /> : 
+                            (<div>
+                                <p>Already enrolled, view it in your <Link to="/">classroom</Link>.</p>
+                                <p>To unenroll you need at least 30 days from the day you enrolled.</p>
+                            </div>)
+                        )
+                            
+                    ) : 
+                    ( <Link to="/plans"><Button width="250px" type="error" text="Subscribe to a Plan"/></Link>) 
+                ): 
+            (<Link to="/registeration/sign-in"><Button width="250px" type="error" text="Sign in to Enroll"/></Link>)}
+        </div>
+    )
+    return courseLoading ? <Loading /> : (
         <div className="course">
-            <header className="course__header">
+            <header className="course__header" style={{background : 'url('+courseInfo.thumb+')'}}>
                 <div className="course__bg-overlay">
 
                 </div>
                 <div className="course__title">
-                    <h2>Become a Data Scientist</h2>
+                    <h4>{courseInfo.title}</h4>
                 </div>
                 <div className="course__teacher">
-                    <h4><span className="span--normal">By </span>Jeff Hammerbacher</h4>
+                    <p><span className="span--normal">By </span>{courseInfo.teacher}</p>
                 </div>
                 <div className="course__desc">
-                    <p>
-                    Gain real-world data science experience with projects designed by industry experts.
-                    Build your portfolio and advance your data science career.
-                    </p>
+                    <p>{courseInfo.description}</p>
                 </div>
-                <div className="course__cta">
-                    <Button width="250px" text="Enroll Now"/>
-                </div>
-                <div className="course__play-vid">
-                    <PlayCircleFilledIcon style={{fontSize: "4rem", cursor: "pointer"}}/>
-                </div>
+                {cta}
             </header>
             <main className="course__details align">
                 <div className="course__info">
-                    <InfoCol title="Estimated Time" info="6 Months" ext="At 15 hrs/week"/>
-                    <InfoCol title="Skill Level" info="6 Months" ext="At 15 hrs/week"/>
-                    <InfoCol title="Prereuisites" info="6 Months" ext="At 15 hrs/week"/>
-                    <InfoCol title="Language" info="6 Months" ext="At 15 hrs/week"/>
+                    <InfoCol title="Estimated Time" info={courseInfo.period}/>
+                    <InfoCol title="Skill Level" info={courseInfo.level}/>
+                    <InfoCol title="Category" info={courseInfo.category}/>
+                    <InfoCol title="Language" info={courseInfo.language}/>
                 </div>
                 <div className="course__chapters">
                     <div className="section-title">
@@ -43,28 +111,12 @@ const Course = (thumsb) => {
                     </div>
                     <div>
                         <ul className="chapters__list">
-                            <li className="chapters__chapter">
-                                <h5>Solving Data Science Problems</h5>
-                                <p>Learn the data science process, including how to build effective data visualizations, and
-how to communicate with various stakeholders.</p>
-                            </li>
-                            <li className="chapters__chapter">
-                                <h5>Solving Data Science Problems</h5>
-                                <p>
-                                    Learn the data science process, including how to build effective data visualizations, and
-                                    how to communicate with various stakeholders.
-                                </p>
-                            </li>
-                            <li className="chapters__chapter">
-                                <h5>Solving Data Science Problems</h5>
-                                <p>Learn the data science process, including how to build effective data visualizations, and
-how to communicate with various stakeholders.</p>
-                            </li>
-                            <li className="chapters__chapter">
-                                <h5>Solving Data Science Problems</h5>
-                                <p>Learn the data science process, including how to build effective data visualizations, and
-how to communicate with various stakeholders.</p>
-                            </li>
+                            {courseInfo.chapters.map(chapter => (
+                                <li className="chapters__chapter">
+                                    <h5>{chapter.title}</h5>
+                                    <p>{chapter.description}</p>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>
@@ -83,12 +135,10 @@ how to communicate with various stakeholders.</p>
                 </div>
                 <div className="course__inv">
                     <div className="course__inv-title">
-                        <h3>Become a Data Scientist</h3>
+                        <h4>{courseInfo.title}</h4>
                         <p>Enroll today, and start putting your skills to work!</p>
                     </div>
-                    <div className="course__inv-cta">
-                        <Button width="15rem" text="Enroll Now"/>
-                    </div>
+                    {cta}
                 </div>
             </main>
         </div>

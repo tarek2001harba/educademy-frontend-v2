@@ -9,7 +9,7 @@ const Card = (props) => {
         border: props.border
     }
     return (
-        <div className="card" style={cardStyling} >
+        <div className="card" style={cardStyling}>
             {props.children}
         </div>
     )

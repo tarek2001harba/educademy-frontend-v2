@@ -7,7 +7,7 @@
     padding: 2rem;
 }
 
-.reg__pagination-container {
+.reg__tabs-router-container {
     width: 40%;
     margin-bottom: 2.5%;
     display: flex;
@@ -65,8 +65,23 @@
 }
 
 .reg__success h4{
+    margin-bottom: 1rem;
     color: var(--green);
+}
+.reg__error{
+    width: 40%;
+    height: 20vh;
+    max-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--darkGrey);
+    padding: 3rem;
+    border: .25rem solid var(--red);
     margin-bottom: 2rem;
 }
-.reg__success h5{
+
+.reg__error p{
+    color: var(--red);
 }

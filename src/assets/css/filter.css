@@ -1,0 +1,16 @@
+.filter__filter{
+    width: 17.5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.filter__filter-name{
+    color: var(--lightGrey);
+    font-size: 1rem;
+}
+
+.filter select{
+    margin-top: .5rem;
+    width: 100%;
+}

@@ -21,7 +21,7 @@ const Navbar = () => {
                 </Link>
             </div>
             <Searchbar />
-            <Link className="navbar__link" to="/">{user.signed ? "Classroom" : "Home"}</Link>
+            <Link className="navbar__link" to="/">{user.signed ? null : "Home"}</Link>
             <Link className="navbar__link" to="/plans">Plans</Link>
             <Link className="navbar__link" to="/catalog">Catalog</Link>
             {user.signed ? 

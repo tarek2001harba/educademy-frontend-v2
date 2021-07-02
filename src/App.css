@@ -97,6 +97,10 @@ select {
     -o-border-radius: var(--borderRadius);
 }
 
+select{
+    cursor: pointer;
+}
+
 button {
     height: 50px;
     border: none;
@@ -111,6 +115,21 @@ button {
     cursor: pointer;
 }
 
+.filters{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.no-res-message {
+    color: var(--red);
+    min-height: 30vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .border--left {
     border-radius: var(--borderRadius) 0px 0px var(--borderRadius);
     -webkit-border-radius: var(--borderRadius) 0px 0px var(--borderRadius);

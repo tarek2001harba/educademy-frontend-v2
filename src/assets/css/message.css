@@ -1,0 +1,21 @@
+.message {
+    min-height: 20vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+.message.error {
+    border: .25rem solid var(--red);
+}
+.message.error p{
+    color: var(--red);
+}
+
+.message.normal {
+    border: .25rem solid var(--white);
+}
+.message.normal p{
+    color: var(--white);
+}

@@ -4,6 +4,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 
 // css imports
 import './scrollarrows.css'
+
 const ScrollArrows = (props) => {
     // component logic
     let prevScrollPos = null
@@ -45,19 +46,17 @@ const ScrollArrows = (props) => {
     // component jsx
     return (
         <div className="scroll-arrows">
+            <div className="scroll-arrows__arrow-container">
+                <div className="scroll-arrows__arrow arrow--left" style={{background: props.bg}}>
+                    <ChevronLeftIcon onClick={ scrollLeft } style={{fontSize: props.size, color: props.color}} />
+                </div>
+            </div>
             <div className="scroll-arrows__content">
                 {props.children}
             </div>
-            <div className="scroll-arrows__container">
-                <div className="scroll-arrows__arrow-container">
-                    <div className="scroll-arrows__arrow arrow--left" style={{background: props.bg}}>
-                        <ChevronLeftIcon onClick={ scrollLeft } style={{fontSize: props.size, color: props.color}} />
-                    </div>
-                </div>
-                <div className="scroll-arrows__arrow-container">
-                    <div className="scroll-arrows__arrow arrow--right" style={{background: props.bg}}>
-                        <ChevronRightIcon onClick={ scrollRight } style={{fontSize: props.size, color: props.color}}/>
-                    </div>
+            <div className="scroll-arrows__arrow-container">
+                <div className="scroll-arrows__arrow arrow--right" style={{background: props.bg}}>
+                    <ChevronRightIcon onClick={ scrollRight } style={{fontSize: props.size, color: props.color}}/>
                 </div>
             </div>
         </div>

@@ -1,19 +1,17 @@
-.catalog {
-    
-}
-
 .catalog__trending {
+    width: 100%;
     padding-top: 48px;
 }
 
 .trending__content {
+    width: 100%;
     display: flex;
     align-items: center;
     padding-top: 2.5%;
 }
 
 .catalog__courses {
-    min-height: 100vh;
+    min-height: 20vh;
 }
 
 .courses__title {
@@ -28,4 +26,8 @@
     row-gap: 36px;
     column-gap: 18px;
     margin: 48px 0;
+}
+
+.catalog a {
+    text-decoration: none;
 }

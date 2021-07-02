@@ -1,7 +1,7 @@
-import React, {useEffect, useRef} from 'react'
+import React, { useRef } from 'react'
 // react components
 import Button from '../../components/Button'
-import Pagination from '../../components/Pagination'
+import TabsRouter from '../../components/TabsRouter'
 import Card from '../../components/Card'
 import CourseCard from '../../components/CourseCard'
 import Features from '../../components/Features'
@@ -11,18 +11,16 @@ import ScrollArrows from '../../components/ScrollArrows/ScrollArrows'
 // asset files
 import './homepage.css'
 import Bg from '../../assets/vid/bg.mp4'
-import artIcon from '../../assets/img/icons/art-icon.svg'
-import codingIcon from '../../assets/img/icons/coding-icon.svg'
-import bizIcon from '../../assets/img/icons/business-icon.svg'
-import sciIcon from '../../assets/img/icons/science-icon.svg'
-import photoIcon from '../../assets/img/icons/photo-icon.svg'
-import filmIcon from '../../assets/img/icons/film-icon.svg'
-import animIcon from '../../assets/img/icons/anim-icon.svg'
+// import artIcon from '../../assets/img/icons/art-icon.svg'
+// import codingIcon from '../../assets/img/icons/coding-icon.svg'
+// import bizIcon from '../../assets/img/icons/business-icon.svg'
+// import sciIcon from '../../assets/img/icons/science-icon.svg'
+// import photoIcon from '../../assets/img/icons/photo-icon.svg'
+// import filmIcon from '../../assets/img/icons/film-icon.svg'
+// import animIcon from '../../assets/img/icons/anim-icon.svg'
 
 const Homepage = () => {
     const bgRef = useRef()
-    useEffect(() => {
-    })
     return (
         <div className="homepage">
             <header className="homepage__hero">
@@ -42,7 +40,7 @@ const Homepage = () => {
                 <div className="homepage__title">
                     <h3 className="title-color special-heading">Explore Your Intrests</h3>
                 </div>
-                <Pagination sections={ ["All Courses", "Design", "Animation", "Bussiness", "Programing", "Photo & Film"] }/>
+                <TabsRouter sections={ ["All Courses", "Design", "Animation", "Bussiness", "Programing", "Photo & Film"] }/>
                 <div className="homepage__course-showcase align">
                     <ScrollArrows size="3.5rem" sElem="course-card">
                         <Card width="500px" height="350px" marginRight="var(--cardMargin)">

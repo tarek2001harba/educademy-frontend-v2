@@ -40,6 +40,101 @@
     -o-transition: all .2s ease-in-out;
 }
 
+.btn--done{
+    background: var(--green);
+    color: var(--white);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.btn--error{
+    background: var(--red);
+    color: var(--white);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.btn--error::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: var(--white);
+    transform: translateY(100%);
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    pointer-events: none;
+    z-index: -1;
+    transition: all .2s ease-in-out;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+}
+
+.btn--error:hover::before {
+    transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+}
+
+
+.btn--error:hover {
+    color: var(--red);
+}
+
+.btn--cancel{
+    background-color: transparent;
+    border: 2px solid var(--red);
+    color: var(--red);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.btn--cancel::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: var(--red);
+    transform: translateY(100%);
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    pointer-events: none;
+    z-index: -1;
+    transition: all .2s ease-in-out;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+}
+
+.btn--cancel:hover::before {
+    transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+}
+
+
+.btn--cancel:hover {
+    color: var(--white);
+}
+
 .btn--filled:hover::before {
     transform: translateY(0%);
     -webkit-transform: translateY(0%);
@@ -61,7 +156,6 @@
     z-index: 1;
     overflow: hidden;
 }
-
 .btn--outlined--white::before {
     content: "";
     width: 100%;

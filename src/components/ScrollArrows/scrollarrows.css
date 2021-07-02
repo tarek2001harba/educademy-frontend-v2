@@ -1,7 +1,6 @@
 .scroll-arrows {
     display: flex;
-    flex-direction: column;
-    max-width: 100%;
+    min-width: 100%;
 }
 
 .scroll-arrows__content {
@@ -9,7 +8,6 @@
     height: 100%;
     display: flex;
     overflow: scroll;
-    padding-bottom: 2.5%;
 }
 
 .scroll-arrows__content::-webkit-scrollbar {

@@ -68,16 +68,16 @@ const AddCourse = () => {
             }]
         )
     }
-    const submit = async () =>{
+    const submit = () =>{
         const langSelect = document.querySelector("#course-lang")
         const lvlSelect = document.querySelector("#course-lvl")
         const ctgSelect = document.querySelector("#course-ctg")
         const lvl = lvlSelect.options[lvlSelect.selectedIndex].value
         const ctg = ctgSelect.options[ctgSelect.selectedIndex].value
-        await setCourseInfo({
+        setCourseInfo({
                 "teacher" : user.tid,
                 "title" : document.querySelector("#course-title").value,
-                "description" : document.querySelector("#course-title").value,
+                "description" : document.querySelector("#course-desc").value,
                 "language" : langSelect.options[langSelect.selectedIndex].text,
                 "level" : lvl,
                 "category" : ctg,
@@ -85,8 +85,7 @@ const AddCourse = () => {
                 "thumb" : document.querySelector("#course-thumb").value,
                 "chapters" : chapters,
                 "lessons" : lessons
-            }
-        )
+        })
         console.log(courseInfo)
         axios.post('/course/create.php', courseInfo).then(res => {
             console.log(res.data)

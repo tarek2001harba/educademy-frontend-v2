@@ -6,7 +6,7 @@ const Field = ({fieldName, fieldType, options, id, last}) => {
             (<select id={id} className="input-field__input" name={fieldName}>
                 {options.map((option, ind) => {
                         return Array.isArray(option) ? 
-                        <option value={option[0]} key={option+(ind+1)}>{option[1]}</option> :
+                        <option value={option[0]} key={option+(ind+1)} >{option[1]}</option> :
                         <option value={option} key={option+(ind+1)}>{option}</option>
                     })
                 }
@@ -15,12 +15,13 @@ const Field = ({fieldName, fieldType, options, id, last}) => {
                 <textarea id={id} type="text" name={fieldName}></textarea>
             ) :
             (
-                <input id={id} className="input-field__input" type={fieldType !== null ? fieldType : "text"}/>
+                <input id={id} className="input-field__input" type={fieldType !== null ? fieldType : "text"} />
             );
     return (
         <div className="input-field" style={last ? {marginBottom:"2rem"} : {}}>
             <span className="input-field__name">{fieldName}:</span>
             {input}
+            <span className="field__error"></span>
         </div>
     )
 }

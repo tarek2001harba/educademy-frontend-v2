@@ -16,6 +16,7 @@ import Course from './pages/Course/Course'
 import Classroom from './pages/Classroom/Classroom'
 import Lesson from './pages/Lesson/Lesson'
 import AddCourse from './pages/AddCourse/AddCourse'
+import ScrollToTop from './components/ScrollToTop'
 // import Blog from './pages/Blog/Blog'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -31,7 +32,8 @@ function App() {
   });
   return (
     <div className="App">
-      <Router>     
+      <Router>
+        <ScrollToTop />
         <UserContext.Provider value={{user, setUser}}>
           <Navbar />
           <Switch>
@@ -57,7 +59,7 @@ function App() {
             <Route path="/registeration">
               <Registeration />
             </Route>
-            <Route exact path="/course">
+            <Route exact path="/course/:id">
               <Course />
               <Footer />
             </Route>

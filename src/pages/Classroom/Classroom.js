@@ -37,7 +37,7 @@ const Classroom = () => {
                 </div>
             </div>
             <div className="uinfo__action">
-                    <Button type="outlined" text="Sign Out" size="big" onClick={signOut}/>
+                    <Button type="outlined" text="Sign Out" size="big" handleClick={signOut}/>
                 </div>
         </div>
     )
