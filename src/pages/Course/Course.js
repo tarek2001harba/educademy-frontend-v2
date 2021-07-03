@@ -4,12 +4,17 @@ import { useParams } from 'react-router-dom'
 import Button from '../../components/Button'
 import InfoCol from '../../components/InfoCol'
 import RatingCard from '../../components/RatingCard'
+import Field from '../../components/Field'
+import InfoItem from '../../components/InfoItem'
+import Expandable from '../../components/Expandable'
 import UserContext from '../../contexts/UserContext'
 import Loading from '../../components/Loading'
+//material ui
+import { Rating } from '@material-ui/lab'
 // import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled'
 import axios from 'axios'
 import './course.css'
-import Message from '../../components/Message'
+
 const Course = () => {
     const { id } = useParams();
     const { user } = useContext(UserContext) 
@@ -17,25 +22,41 @@ const Course = () => {
     const [courseInfo, setCourseInfo] = useState({chapters : []})
     const [registered, setRegistered] = useState(false)
     const [subscribed, setSubscribed] = useState(false)
+    const [rating, setRating] = useState(null)
     const [allowUnenroll, setAllowUnenroll] = useState(false)
     axios.defaults.baseURL = 'https://localhost/educademy/api'
     useEffect(() => {
         axios.post('/course/getCourse.php', {'id' : id}).then(res => {
-            console.log(res)
             setCourseInfo(() => res.data)
         }).catch(err => console.log(err))
-        axios.post('/registeration/check.php', {'cid' : id, 'sid' : user.sid}).then(res => {
-            console.log(res)
-            setRegistered(res.data.registered)
-            setAllowUnenroll(res.data.allowUnenroll)
-        }).catch(err => console.log(err))
         axios.post('/purchase/check.php', {sid : user.sid}).then(res => {
-            console.log(res)
             setSubscribed(res.data.subscribed)
         }).catch(err => console.log(err))
         setCourseLoading(false)
+    }, [])
+
+    // check if registered
+    useEffect(() => {
+        axios.post('/registeration/check.php', {'cid' : id, 'sid' : user.sid}).then(res => {
+            setRegistered(res.data.registered)
+            setAllowUnenroll(res.data.allowUnenroll)
+        }).catch(err => console.log(err))
     }, [registered])
 
+    // gets rating if rated previously, if not, it does nothing
+    useEffect(() => {
+        axios.post('/rating/getRating.php', {sid : user.sid, cid : id}).then(res => {
+            console.log(res)
+            setRating(res.data)
+        }).catch(err => console.log(err))
+    }, [])
+
+    const rate = (e, rating) => {
+        const comment = document.querySelector('#rating-comment')
+        axios.post('/rating/create.php', {sid : user.sid, cid : id, 
+                                        comment : comment.value, rate: rating}).then(res => {
+        }).catch(err => console.log(err))
+    }
     const enroll = () => {
         axios.post('/registeration/enroll.php', {
             cid : courseInfo.cid,
@@ -113,43 +134,70 @@ const Course = () => {
                         }
                     </div>
                     <div>
-                        <ul className="chapters__list">
+                        <div className="chapters__list">
                             {courseInfo.chapters.map(chapter => (
-                                <li className="chapters__chapter">
-                                    <h5>{chapter.title}</h5>
-                                    <p>{chapter.description}</p>
-                                    {chapter.lessons.length > 0 ?
-                                    chapter.lessons.map(ls => (
-                                        <li className="chapters__chapter">
-                                            <h5>{ls.title}</h5>
-                                            <p>{ls.description}</p>
-                                        </li> 
-                                    )) : null}
-                                </li>
+                                <Expandable title={chapter.title} 
+                                            desc={chapter.description}
+                                            expand={chapter.lessons}
+                                            pageId={id}/>
                             ))}
-                        </ul>
+                        </div>
                     </div>
                 </div>
                 <div className="course__ratings">
-                    <div className="section-title">
-                        <h3 className="title-color">What Students Say</h3>
-                    </div>
-                    <div className="course__ratings-container">
-                        <RatingCard />
-                        <RatingCard />
-                        <RatingCard />
-                        <RatingCard />
-                        <RatingCard />
-                        <RatingCard />
-                    </div>
+                    {registered ? (
+                        rating.rated ? (
+                            <div>
+                                <div className="rating-title">
+                                    <h3 className="title-color">Your Rating</h3>
+                                </div>
+                                <div className="course__rating">
+                                    <InfoItem fieldName="Comment" info="Something"/>
+                                    <Rating name="course-rating" defaultValue={2} size="large"/>
+                                </div>
+                            </div>
+                        ) : (
+                            <div>
+                                <div className="rating-title">
+                                    <h3 className="title-color">Leave Your Thoughts</h3>
+                                </div>
+                                <div className="course__rating">
+                                    <div className="rating__comment">
+                                        <Field fieldName="Comment" id="rating-comment"/>
+                                    </div>
+                                    <Rating name="course-rating" defaultValue={2} size="large" onChange={rate}/>
+                                    <div className="rating__cta">
+                                        <Button text="submit" handleClick={rate}/>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    ) : (
+                        <div>
+                            <div className="section-title">
+                                <h3 className="title-color">What Students Say</h3>
+                            </div>
+                            <div className="course__ratings-container">
+                                <RatingCard />
+                                <RatingCard />
+                                <RatingCard />
+                                <RatingCard />
+                                <RatingCard />
+                                <RatingCard />
+                            </div>
+                        </div>
+                    )}
                 </div>
-                <div className="course__inv">
-                    <div className="course__inv-title">
-                        <h4>{courseInfo.title}</h4>
-                        <p>Enroll today, and start putting your skills to work!</p>
+                {registered ? null : (
+                    <div className="course__inv">
+                        <div className="course__inv-title">
+                            <h4>{courseInfo.title}</h4>
+                            <p>Enroll today, and start putting your skills to work!</p>
+                        </div>
+                        {cta}
                     </div>
-                    {cta}
-                </div>
+                )}
+                
             </main>
         </div>
     )

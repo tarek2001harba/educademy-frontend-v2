@@ -1,6 +1,6 @@
 import React from 'react'
 import Card from '../components/Card'
-import Rating from '../components/Rating'
+import { Rating } from '@material-ui/lab';
 import Img from '../assets/img/user.jpg'
 import '../assets/css/ratingCard.css'
 const RatingCard = () => {
@@ -16,7 +16,7 @@ const RatingCard = () => {
                             <p>Grandizer Harba</p>
                         </div>
                         <div className="rating-card__rating">
-                            <Rating color="var(--white)"/>
+                            <Rating value={5}color="var(--white)"/>
                         </div>
                     </div>
                 </div>

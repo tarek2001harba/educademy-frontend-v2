@@ -1,6 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react'
 import UserContext from '../contexts/UserContext'
-import Rating from './Rating'
 import ProgressBar from './ProgressBar'
 import { Link } from 'react-router-dom'
 import Message from './Message'

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import Rating from './Rating'
+import {Rating} from '@material-ui/lab'
 import '../assets/css/courseCard.css'
 import Button from './Button'
 const CourseCard = ({ enrolled, section, cid, thumb, title, creator, level, language, period, key }) => {
@@ -27,9 +27,9 @@ const CourseCard = ({ enrolled, section, cid, thumb, title, creator, level, lang
                 </div>
                 <div className="course-card__students-info">
                     <div className="course-card__rating">
-                        <Rating />
+                        <Rating value={4} readOnly={true}/>
                     </div>
-                    <span className="">|</span>
+                    <span className="divide">|</span>
                     <span className="course-card__students-num" style={{ fontWeight: "bold" }}>1000,000 <span style={{ fontWeight: "normal" }}>students</span></span>
                 </div>
                 <div className="course-card__sub-info">

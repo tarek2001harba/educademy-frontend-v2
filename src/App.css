@@ -209,6 +209,13 @@ p {
     font-weight: bold;
 }
 
+.MuiRating-icon {
+    margin-right: .25rem;
+}
+
+.MuiRating-iconEmpty {
+    fill: transparent;
+}
 /* ::-webkit-scrollbar {
     width: 1rem;
 }
