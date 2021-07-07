@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {Rating} from '@material-ui/lab'
 import '../assets/css/courseCard.css'
 import Button from './Button'
-const CourseCard = ({ enrolled, section, cid, thumb, title, creator, level, language, period, key }) => {
+const CourseCard = ({ enrolled, section, cid, thumb, title, creator, level, language, period, rate, studentsNum, key }) => {
     // const buttons = enrolled ?
     //     (<div className="course-card__cta">
     //         <Button type="outlined" text="Leave Course" size="big"/>
@@ -17,20 +17,13 @@ const CourseCard = ({ enrolled, section, cid, thumb, title, creator, level, lang
             <div className="course-card" key={key}>
                 <div className="course-card__overlay"></div>
                 <div className="course-card__image">
-                    <img src={thumb} alt=""/>
+                    <img src={"https://images.pexels.com/photos/1145720/pexels-photo-1145720.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"} alt=""/>
                 </div>
                 <div className="course-card__title">
                     <h5>{ title }</h5>
                 </div>
                 <div className="course-card__creator">
                     <h5><span className="span--normal">By</span> { creator }</h5>
-                </div>
-                <div className="course-card__students-info">
-                    <div className="course-card__rating">
-                        <Rating value={4} readOnly={true}/>
-                    </div>
-                    <span className="divide">|</span>
-                    <span className="course-card__students-num" style={{ fontWeight: "bold" }}>1000,000 <span style={{ fontWeight: "normal" }}>students</span></span>
                 </div>
                 <div className="course-card__sub-info">
                     <p>{level} | {language} | {period}</p>

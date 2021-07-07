@@ -3,8 +3,10 @@ import {Link} from 'react-router-dom'
 // components
 import Card from '../../components/Card'
 import ClassCourse from '../../components/ClassCourse'
+import CourseCard from '../../components/CourseCard'
 import InfoField from '../../components/InfoField'
 import Button from '../../components/Button'
+import Loading from '../../components/Loading'
 import axios from 'axios'
 // contexts
 import UserContext from '../../contexts/UserContext'
@@ -15,6 +17,7 @@ import Message from '../../components/Message'
 const Classroom = () => {
     const {user, setUser} = useContext(UserContext)
     const [ classCourses, setClassCourses ] = useState([])
+    const [ loading, setLoading ] = useState(true)
     const uname = user.fname + " " + user.lname
     axios.defaults.baseURL = 'https://localhost/educademy/api'
     useEffect(() => {
@@ -23,7 +26,13 @@ const Classroom = () => {
                 console.log(res)
                 setClassCourses(res.data)
             })
+        } else {
+            axios.post('/course/getTeacherCourses.php', {tid : user.tid}).then( res => {
+                console.log(res)
+                setClassCourses(res.data)
+            })
         }
+        setLoading(false)
     }, [])
     const signOut = () => {
         setUser({signed:false})
@@ -58,29 +67,46 @@ const Classroom = () => {
             <Link to="/add-course"><Button type="filled" text="Add Course" size="big"/></Link>
         </span>
     )
-    return (
+    return loading ? <Loading /> : (
         <div className="classroom align">
             {UserInfo}
             <div className="classroom__courses-cont">
                 <div className="section-title">
-                    <h3 className="title-color">My Courses</h3>
+                    <h3 className="title-color">{user.type === "Teacher" ? "My Posted Courses" : "My Courses"}</h3>
                     {user.type === "Teacher" ? addCourseAction : null}
                 </div>
                 <div className="classroom__courses">
                     {classCourses.length === 0 ? 
                     <Message type="error" message="You are not enrolled in any courses" />
-                    : classCourses.map(course => (
-                        <Card width="100%" height="100%">
-                            <ClassCourse enrolled={true}
-                                cid={course.cid}
-                                image={course.thumb}
-                                title={course.title}
-                                creator={course.teacher}
-                                chapter="Logo Design Principles"
-                                lesson="Negative Space"
-                            />
-                        </Card>
-                    ))}
+                    : classCourses.map(course => user.type === "Student" ? (
+                            <Card width="100%" height="100%">
+                                <ClassCourse enrolled={true}
+                                    cid={course.cid}
+                                    image={course.thumb}
+                                    title={course.title}
+                                    creator={course.teacher}
+                                    chapter="Logo Design Principles"
+                                    lesson="Negative Space"
+                                />
+                            </Card>
+                        ) : (
+                            <Card width="500px" height="350px" marginRight="var(--cardMargin)" key={course['course_id']}>
+                                <CourseCard 
+                                    enrolled={false} section="home"
+                                    cid={course.course_id}
+                                    image="https://cdn.pixabay.com/photo/2018/01/17/07/06/laptop-3087585_960_720.jpg"
+                                    title={course.title}
+                                    creator={course.teacher}
+                                    level={course.level}
+                                    language={course.language}
+                                    period={course.period}
+                                    rate={course.rate}
+                                    studentsNum={course.students_num}
+                                    key={course.course_id}
+                                />
+                            </Card>
+                        )
+                    )}
                 </div>
             </div>
         </div>

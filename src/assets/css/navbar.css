@@ -69,3 +69,9 @@
     color: var(--black);
     opacity: 1;
 }
+.nav__lesson-title{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin: 0px 2.5%;
+}

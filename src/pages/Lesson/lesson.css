@@ -1,8 +1,7 @@
 .lesson {
     height: 90vh;
-    max-height: 100vh;
+    max-height: 90vh;
     width: 100%;
-
     display: grid;
     grid-template-areas: "video materials"
         "nav nav";
@@ -54,4 +53,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.lesson a{
+    text-decoration: none;
+}
+
+.lesson a:hover{
+    opacity: 1;
 }

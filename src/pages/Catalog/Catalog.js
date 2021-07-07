@@ -100,7 +100,7 @@ const Catalog = () => {
             setTrendCourses(res.data)
             setTcLoading(false)
         }).catch(err => console.log(err))
-    }, [filters, offset])
+    }, [ offset ])
 
     const updateOffset = (e) => {
         setOffset(parseInt(e.target.textContent)-1)
@@ -122,6 +122,8 @@ const Catalog = () => {
                                     level={course.level}
                                     language={course.language}
                                     period={course.period}
+                                    rate={course.rate}
+                                    studentsNum={course.students_num}
                                     key={course.course_id}
                                 />
                             </Card>
@@ -151,6 +153,8 @@ const Catalog = () => {
                                     level={course.level}
                                     language={course.language}
                                     period={course.period}
+                                    rate={course.rate}
+                                    studentsNum={course.students_num}
                                     key={course.course_id}
                                 />
                             </Card>

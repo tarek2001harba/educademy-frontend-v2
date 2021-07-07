@@ -216,6 +216,15 @@ p {
 .MuiRating-iconEmpty {
     fill: transparent;
 }
+
+.MuiAccordion-root {
+    width: 100%;
+    min-height: 10vh;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    padding: 2rem;
+    cursor: pointer;
+}
 /* ::-webkit-scrollbar {
     width: 1rem;
 }

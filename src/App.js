@@ -1,5 +1,5 @@
 // react libs and framework imports
-import {React, useState, useContext} from 'react'
+import {React, useState} from 'react'
 import {
   BrowserRouter as Router,
   Route,
@@ -22,6 +22,9 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 // contexts
 import UserContext from './contexts/UserContext'
+import RegisteredContext from './contexts/RegisteredContext'
+import SubscribedContext from './contexts/SubscribedContext'
+import LessonTitleContext from './contexts/LessonTitleContext'
 
 // styles imports
 import './App.css'
@@ -30,11 +33,17 @@ function App() {
   const [user, setUser] = useState({
     signed: false
   });
+  const [registered, setRegistered] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  const [lessonTitle, setLessonTitle] = useState();
   return (
-    <div className="App">
+    <div className="App" on>
       <Router>
         <ScrollToTop />
         <UserContext.Provider value={{user, setUser}}>
+        <LessonTitleContext.Provider value={{lessonTitle, setLessonTitle}}>
+        <RegisteredContext.Provider value={{registered, setRegistered}} >
+        <SubscribedContext.Provider value={{subscribed, setSubscribed}} >
           <Navbar />
           <Switch>
           <Route exact path="/">
@@ -63,8 +72,8 @@ function App() {
               <Course />
               <Footer />
             </Route>
-            <Route exact path="/lesson">
-              <Lesson />
+            <Route exact path="/course/:cid/lesson/:lid">
+                <Lesson />
             </Route>
             <Route exact path="/add-course">
               <AddCourse />
@@ -73,6 +82,9 @@ function App() {
               <Blog />
             </Route> */}
           </Switch>
+        </SubscribedContext.Provider>
+        </RegisteredContext.Provider>
+        </LessonTitleContext.Provider>
         </UserContext.Provider>
       </Router>
     </div>

@@ -7,8 +7,6 @@ import '../assets/css/plan.css'
 const Plan = ({ subId, title, cost, features, main , purchased}) => {
     const { user } = useContext(UserContext)
     const [ response, setResponse ] = useState(null)
-    console.log(user)
-    axios.defaults.baseURL = 'https://localhost/educademy/api/purchase'
     const sub = () => {
         const send = {sid : user.sid, sub_id : subId};
         axios.post('/make.php', send).then(res => {

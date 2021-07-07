@@ -1,4 +1,4 @@
-import {React, useState, useContext} from 'react'
+import {React, useState, useContext, useEffect} from 'react'
 import Button from '../../components/Button'
 import { Switch, Route, Redirect, Link } from 'react-router-dom'
 
@@ -11,10 +11,12 @@ import UserContext from '../../contexts/UserContext'
 import axios from 'axios'
 //css
 import './reg.css'
+import SubscribedContext from '../../contexts/SubscribedContext'
 const Registeration = () => {
     axios.defaults.baseURL = 'https://localhost/educademy/api'
     const [signUpStatus, setSignUpStatus] = useState(null);
     const [signInStatus, setSignInStatus] = useState(null);
+    const {subscribed, setSubscribed} = useContext(SubscribedContext)
     const {user, setUser} = useContext(UserContext)
     const signup = () => {
         const fname = document.querySelector('#signup-fname');
@@ -98,7 +100,6 @@ const Registeration = () => {
         }
         if(email.value !== "" && pwdErr.value !== ""){
             axios.post('/user/signin.php', userIn).then(res => {
-                console.log(res)
                 if(res.request.status === 200){
                     userIn.uid = parseInt(res.data.uid)
                     if(res.data.type === "Teacher"){
@@ -119,6 +120,7 @@ const Registeration = () => {
                     userIn["join_date"] = res.data["join_date"]
                     userIn.signed = true
                     setUser(userIn)
+                    
                     setSignInStatus(true)
                     console.log(res)
                 } else{
@@ -129,31 +131,38 @@ const Registeration = () => {
             })
         }
     }
+    
+    useEffect(() => {
+        axios.post('/purchase/check.php', {sid : user.sid}).then(res => {
+            setSubscribed(res.data.subscribed)
+            console.log(subscribed)
+        }).catch(err => console.log(err))
+    }, [signInStatus])
     return (
         <div className="reg">
             {signUpStatus ? (
             <Route path="/">
-                <div className="reg__success" action="">
+                <div className="reg__success">
                     <Redirect to="/registeration/sign-up/success" exact/>
                     <h4>Welcome to Educademy. Your journey of learning starts today!</h4>
                     <h5>Choose a <Link to="/plans">plan</Link> to get up and running.</h5>
                 </div>
             </Route>) : signUpStatus === false ? (
             <Route path="/registeration/sign-up">
-                <div className="reg__error" action="">
-                    <p>Error while creating account.</p>
+                <div className="reg__error">
+                    <p>Error while creating account. Check if it has been signed up with your e-mail alreay.</p>
                 </div>
             </Route>) : null}
-            {signInStatus === true ? (
+            {signInStatus ? (
             <Route path="/">
-                <div className="reg__success" action="">
+                <div className="reg__success">
                     <Redirect to="/registeration/sign-up/success" exact/>
                     <h4>Welcome Back!</h4>
                     <h5>Go to your <Link to="/">classroom</Link> and continue your journey of learning and improvement. </h5>
                 </div>
             </Route>) : signInStatus === false ? (
                 <Route path="/registeration/sign-in">
-                    <div className="reg__error" action="">
+                    <div className="reg__error">
                         <p>Error while logging in. Check if you are inserting the right information.</p>
                     </div>
                 </Route>
@@ -181,6 +190,7 @@ const Registeration = () => {
                         <Field id="signup-gender" fieldName="Gender" fieldType="select" options={["Male", "Female"]}/>
                         <Field id="signup-bdate" fieldName="Birth Date" fieldType="date"/>
                         <Field id="signup-country" fieldName="Country" />
+                        <Field id="signup-pic" fieldName="Profile Picture Link" />
                         <Field id="signup-about" fieldName="About" fieldType="textarea"/>
                         <Field id="signup-spec" fieldName="Specialization/Study Field" />
                         <Field id="signup-type" fieldName="Account Type" fieldType="select" options={["Teacher", "Student"]} last={true}/>

@@ -6,8 +6,10 @@ import InfoCol from '../../components/InfoCol'
 import RatingCard from '../../components/RatingCard'
 import Field from '../../components/Field'
 import InfoItem from '../../components/InfoItem'
-import Expandable from '../../components/Expandable'
+import ChaptersAccordion from '../../components/ChaptersAccordion'
 import UserContext from '../../contexts/UserContext'
+import RegisteredContext from '../../contexts/RegisteredContext'
+import SubscribedContext from '../../contexts/SubscribedContext'
 import Loading from '../../components/Loading'
 //material ui
 import { Rating } from '@material-ui/lab'
@@ -19,18 +21,25 @@ const Course = () => {
     const { id } = useParams();
     const { user } = useContext(UserContext) 
     const [courseLoading, setCourseLoading] = useState(true)
+    // const [rateLaod, setCourseLoading] = useState(true)
     const [courseInfo, setCourseInfo] = useState({chapters : []})
-    const [registered, setRegistered] = useState(false)
-    const [subscribed, setSubscribed] = useState(false)
-    const [rating, setRating] = useState(null)
+    const {registered, setRegistered} = useContext(RegisteredContext)
+    const {subscribed, setSubscribed} = useContext(SubscribedContext)
+    const [rating, setRating] = useState()
+    const [rated, setRated] = useState(false)
+    const [rateVal, setRateVal] = useState(2)
     const [allowUnenroll, setAllowUnenroll] = useState(false)
     axios.defaults.baseURL = 'https://localhost/educademy/api'
     useEffect(() => {
         axios.post('/course/getCourse.php', {'id' : id}).then(res => {
-            setCourseInfo(() => res.data)
+            setCourseInfo(res.data)
+            console.log(res)
         }).catch(err => console.log(err))
-        axios.post('/purchase/check.php', {sid : user.sid}).then(res => {
-            setSubscribed(res.data.subscribed)
+
+        // gets rating if rated previously, if not, it does nothing
+        axios.post('/rating/getUserRating.php', {sid : user.sid, cid : id}).then(res => {
+            setRating(res.data.result)
+            setRated(res.data.result ? true : false)
         }).catch(err => console.log(err))
         setCourseLoading(false)
     }, [])
@@ -43,20 +52,25 @@ const Course = () => {
         }).catch(err => console.log(err))
     }, [registered])
 
-    // gets rating if rated previously, if not, it does nothing
-    useEffect(() => {
-        axios.post('/rating/getRating.php', {sid : user.sid, cid : id}).then(res => {
-            console.log(res)
-            setRating(res.data)
-        }).catch(err => console.log(err))
-    }, [])
+    const updateRate = (e, rate) => {
+        setRateVal(rate)
+    }
 
-    const rate = (e, rating) => {
+    const rate = () => {
         const comment = document.querySelector('#rating-comment')
-        axios.post('/rating/create.php', {sid : user.sid, cid : id, 
-                                        comment : comment.value, rate: rating}).then(res => {
+        const sendRating = {
+            sid : user.sid, 
+            cid : id, 
+            comment : comment.value, 
+            rate: rateVal
+        }
+        axios.post('/rating/create.php', sendRating).then(res => {
+            console.log(res)
+            setRating(sendRating)
+            setRated(true)
         }).catch(err => console.log(err))
     }
+    
     const enroll = () => {
         axios.post('/registeration/enroll.php', {
             cid : courseInfo.cid,
@@ -77,29 +91,30 @@ const Course = () => {
             console.log(res)
             if(res.status === 200){
                 setRegistered(false);
-                setRegistered(false);
             }
         }).catch(err => console.log(err))
     }
     const cta = (
         <div className="course__cta">
             {user.signed ? 
-                (subscribed ?
-                    (registered === false ? 
-                        <Button width="250px" 
-                        text={ user.type === "Teacher" ? "Teachers Can Not Enroll" : "Enroll Now"} handleClick={enroll} dis={user.type === "Teacher" ? true : false}/> :
-                        (allowUnenroll ? 
-                            <Button width="250px" type="cancel" text="Leave Course" handleClick={unenroll} /> : 
-                            (<div>
-                                <p>Already enrolled, view it in your <Link to="/">classroom</Link>.</p>
-                                <p>To unenroll you need at least 30 days from the day you enrolled.</p>
-                            </div>)
-                        )
-                            
+                (user.type === "Student") ? 
+                    (subscribed ?
+                        (registered === false ? 
+                            <Button width="250px" 
+                            text="Enroll Now" handleClick={enroll}/> :
+                            (allowUnenroll ? 
+                                <Button width="250px" type="cancel" text="Leave Course" handleClick={unenroll} /> : 
+                                (<div>
+                                    <p>Already enrolled, view it in your <Link to="/">classroom</Link>.</p>
+                                    <p>To unenroll you need at least 30 days from the day you enrolled.</p>
+                                </div>)
+                            )
+                        ) : 
+                        ( <Link to="/plans"><Button width="250px" type="error" text="Subscribe to a Plan"/></Link>) 
                     ) : 
-                    ( <Link to="/plans"><Button width="250px" type="error" text="Subscribe to a Plan"/></Link>) 
-                ): 
-            (<Link to="/registeration/sign-in"><Button width="250px" type="error" text="Sign in to Enroll"/></Link>)}
+                    (<Button width="250px" text="Teachers Can Not Enroll" dis={true}/>) :
+                (<Link to="/registeration/sign-in"><Button width="250px" type="error" text="Sign in to Enroll"/></Link>)
+            }
         </div>
     )
     return courseLoading ? <Loading /> : (
@@ -133,27 +148,24 @@ const Course = () => {
                             <h3 className="title-color">What You'll Learn</h3> 
                         }
                     </div>
-                    <div>
-                        <div className="chapters__list">
-                            {courseInfo.chapters.map(chapter => (
-                                <Expandable title={chapter.title} 
-                                            desc={chapter.description}
-                                            expand={chapter.lessons}
-                                            pageId={id}/>
-                            ))}
-                        </div>
+                    <div className="chapters__list">
+                        <ChaptersAccordion 
+                            chapters={courseInfo ? courseInfo.chapters : []}
+                            courseId={id}
+                        />
                     </div>
                 </div>
                 <div className="course__ratings">
                     {registered ? (
-                        rating.rated ? (
+                        rated ? (
                             <div>
                                 <div className="rating-title">
                                     <h3 className="title-color">Your Rating</h3>
                                 </div>
                                 <div className="course__rating">
-                                    <InfoItem fieldName="Comment" info="Something"/>
-                                    <Rating name="course-rating" defaultValue={2} size="large"/>
+                                    {console.log(rating.rate)}
+                                    <Rating name="course-rating" value={rating.rate} readOnly={true} size="large"/>
+                                    <InfoItem fieldName="Comment" info={rating.comment} centered={true}/>
                                 </div>
                             </div>
                         ) : (
@@ -162,12 +174,12 @@ const Course = () => {
                                     <h3 className="title-color">Leave Your Thoughts</h3>
                                 </div>
                                 <div className="course__rating">
+                                    <Rating name="course-rating" defaultValue={1} size="large" onChange={updateRate}/>
                                     <div className="rating__comment">
                                         <Field fieldName="Comment" id="rating-comment"/>
                                     </div>
-                                    <Rating name="course-rating" defaultValue={2} size="large" onChange={rate}/>
                                     <div className="rating__cta">
-                                        <Button text="submit" handleClick={rate}/>
+                                        <Button text="submit" handleClick={rate} size="medium"/>
                                     </div>
                                 </div>
                             </div>

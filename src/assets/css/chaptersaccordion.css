@@ -1,0 +1,40 @@
+.MuiAccordion-root {
+    padding: 2rem;
+}
+
+.expandable h5{
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.expandable p {
+    font-size: var(--baseFont);
+}
+
+.expandable__title{
+    display: flex;
+    align-items: center;
+}
+
+.expand{
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.expand ul {
+    margin: 0 3rem;
+}
+
+.expand li{
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0 2rem;
+    background-color: var(--white);
+    border-left: .5rem solid var(--accentColor);
+}
+
+.expand h5{
+    display: inline-block;
+    color: var(--black);
+}

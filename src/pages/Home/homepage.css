@@ -118,3 +118,10 @@
         -o-transform: translateX(1000%);
     }
 } */
+
+.homepage a {
+    text-decoration: none;
+}
+.homepage a:hover {
+    opacity: 1;
+}

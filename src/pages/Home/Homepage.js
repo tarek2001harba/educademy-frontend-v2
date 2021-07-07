@@ -1,4 +1,5 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useState } from 'react'
+import {Link} from 'react-router-dom'
 // react components
 import Button from '../../components/Button'
 import TabsRouter from '../../components/TabsRouter'
@@ -7,6 +8,9 @@ import CourseCard from '../../components/CourseCard'
 import Features from '../../components/Features'
 import Plans from '../../components/Plans'
 import ScrollArrows from '../../components/ScrollArrows/ScrollArrows'
+import Loading from '../../components/Loading'
+import axios from 'axios'
+
 // js libs
 // asset files
 import './homepage.css'
@@ -20,11 +24,21 @@ import Bg from '../../assets/vid/bg.mp4'
 // import animIcon from '../../assets/img/icons/anim-icon.svg'
 
 const Homepage = () => {
-    const bgRef = useRef()
-    return (
+    const [courses, setCourses] = useState({'courses' : []})
+    const [loading , setLaoding] = useState(true) // loading status for all courses
+    axios.defaults.baseURL = 'https://localhost/educademy/api'
+    useEffect(() => {
+        axios.post('/course/getAll.php', {
+                offset : 0
+        }).then(res => {
+            setCourses(res.data)
+            setLaoding(false)
+        }).catch(err => console.log(err))
+    }, [ ])
+    return loading ? <Loading /> : (
         <div className="homepage">
             <header className="homepage__hero">
-                <video className="homepage__bg" ref={bgRef} src={ Bg } muted autoPlay loop>
+                <video className="homepage__bg" src={ Bg } muted autoPlay loop>
                     Failed to play the video.
                 </video>
                 <div className="homepage__hero-content align">
@@ -32,7 +46,7 @@ const Homepage = () => {
                         <h1 className="text--white special-heading" >Unlock your possibilities.</h1>
                     </div>
                     <div className="homepage__cta-container">
-                        <Button type="filled" text="Get Started" />
+                        <Link to="/registeration/sign-in"><Button type="filled" text="Get Started" /></Link>
                     </div>
                 </div>
             </header>
@@ -43,48 +57,23 @@ const Homepage = () => {
                 <TabsRouter sections={ ["All Courses", "Design", "Animation", "Bussiness", "Programing", "Photo & Film"] }/>
                 <div className="homepage__course-showcase align">
                     <ScrollArrows size="3.5rem" sElem="course-card">
-                        <Card width="500px" height="350px" marginRight="var(--cardMargin)">
-                            <CourseCard enrolled={false}  
-                                image="https://cdn.pixabay.com/photo/2018/01/17/07/06/laptop-3087585_960_720.jpg"
-                                title="Python: From Start to Finish, All You Need to Know"
-                                creator="Jack Ma"
-                            />
-                        </Card>
-                        <Card width="500px" height="350px" marginRight="var(--cardMargin)">
-                            <CourseCard enrolled={false}  
-                                image="https://cdn.pixabay.com/photo/2014/05/03/00/46/notebook-336634_960_720.jpg"
-                                title="Learn Graphic Design With an Award-Winning Designer"
-                                creator="Sklolo Harba"
-                            />
-                        </Card>
-                        <Card width="500px" height="350px" marginRight="var(--cardMargin)">
-                            <CourseCard enrolled={false}  
-                                image="https://cdn.pixabay.com/photo/2019/11/19/22/24/watch-4638673_960_720.jpg"
-                                title="Economics: Historical Moments that Shaped the World"
-                                creator="Hankash Hankosh"
-                            />
-                        </Card>
-                        <Card width="500px" height="350px" marginRight="var(--cardMargin)">
-                            <CourseCard enrolled={false}  
-                                image="https://cdn.pixabay.com/photo/2018/01/17/07/06/laptop-3087585_960_720.jpg"
-                                title="Python: From Start to Finish, All You Need to Know"
-                                creator="Jack Ma"
-                            />
-                        </Card>
-                        <Card width="500px" height="350px" marginRight="var(--cardMargin)">
-                            <CourseCard enrolled={false}  
-                                image="https://cdn.pixabay.com/photo/2014/05/03/00/46/notebook-336634_960_720.jpg"
-                                title="Learn Graphic Design With an Award-Winning Designer"
-                                creator="Sklolo Harba"
-                            />
-                        </Card>
-                        <Card width="500px" height="350px" marginRight="var(--cardMargin)">
-                            <CourseCard enrolled={false}  
-                                image="https://cdn.pixabay.com/photo/2019/11/19/22/24/watch-4638673_960_720.jpg"
-                                title="Economics: Historical Moments that Shaped the World"
-                                creator="Hankash Hankosh"
-                            />
-                        </Card>
+                        {courses.courses.map(course => (
+                            <Card width="500px" height="350px" marginRight="var(--cardMargin)" key={course['course_id']}>
+                                <CourseCard 
+                                    enrolled={false} section="home"
+                                    cid={course.course_id}
+                                    image="https://cdn.pixabay.com/photo/2018/01/17/07/06/laptop-3087585_960_720.jpg"
+                                    title={course.title}
+                                    creator={course.teacher}
+                                    level={course.level}
+                                    language={course.language}
+                                    period={course.period}
+                                    rate={course.rate}
+                                    studentsNum={course.students_num}
+                                    key={course.course_id}
+                                />
+                            </Card>
+                        ))}
                     </ScrollArrows>
                 </div>
                 <Features />

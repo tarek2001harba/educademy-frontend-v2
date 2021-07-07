@@ -2,14 +2,15 @@
     width: 100%;
     padding: 1rem 0;
     font-size: var(--baseFontPlus);
+    display: flex;
+    flex-direction: column;
 }
+
 .info-item__name{
-    padding: 1rem 0;
     font-weight: bold;
-    margin-right: 2rem;
+    margin-bottom: 1rem;
 }
 
 .info-item__info{
     width: 100%;
-    padding: 1rem;
 }

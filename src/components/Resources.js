@@ -6,7 +6,7 @@ const Resources = (props) => {
             <ul className="resources__list">
                 {
                     props.resources.map(res => (
-                        <li className="resources__resource"><a href={res.url}>{res.title}</a></li>
+                        <li className="resources__resource"><a href={res[1]} target="_">{res[0]}</a></li>
                     ))
                 }
             </ul>
